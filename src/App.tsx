@@ -1,11 +1,11 @@
 import React from 'react'
 
-import { SignIn } from './pages/SignIn'
+import { Auth } from './pages/Auth'
 import './App.scss'
 export const App = () => {
   return (
     <div>
-      <SignIn />
+      <Auth />
     </div>
   )
 }
