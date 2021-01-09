@@ -9,6 +9,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import CloseIcon from '@material-ui/icons/Close';
 const useStyles = makeStyles(() => ({
     wrapper: {
         display: 'flex',
@@ -86,8 +87,18 @@ const useStyles = makeStyles(() => ({
         display: 'flex',
         justifyContent: 'center'
     },
+    signUpClosePopupIcon: {
+        marginRight: '20px',
+        cursor: 'pointer',
+        color: '#33A5FF'
+    },
+    signUpPopupHeader : {
+        padding : 24,
+        display : 'flex',
+        alignItems : 'center'
+    }
 }));
-export const Auth = () => {
+export const SignIn = () => {
     const classes = useStyles();
     const [signInPopup, setSignInPopup] = React.useState(false);
     const [signUpPopup, setSignUpPopup] = React.useState(false);
@@ -158,16 +169,26 @@ export const Auth = () => {
           </Button>
                         </DialogActions>
                     </Dialog>
-                    <Dialog open={signUpPopup} onClose={closeSignUpPopup} aria-labelledby="form-dialog-title" >
-                        <TwitterIcon color='primary'  />
+                    <Dialog open={signUpPopup} onClose={closeSignUpPopup} aria-labelledby="form-dialog-title">
+                        <div className={classes.signUpPopupHeader}>
+                            <CloseIcon className={classes.signUpClosePopupIcon} onClick={closeSignUpPopup} />
+                            <Typography variant="h6" component="h6">Создайте учетную запись</Typography>
+                        </div>
+
                         <DialogContent>
                             <TextField
                                 autoFocus
-                                label="E-Mail"
-                                type="email"
+                                label="Имя"
                                 variant="filled"
                                 fullWidth
-                                style={{ marginBottom: '10px' }}
+                                style={{ margin: '5px 0 30px 0' }}
+                            />
+                            <TextField
+                                autoFocus
+                                label="E-mail"
+                                variant="filled"
+                                fullWidth
+                                
                             />
                             <TextField
                                 autoFocus
@@ -175,15 +196,11 @@ export const Auth = () => {
                                 type="password"
                                 variant="filled"
                                 fullWidth
+                                style={{ margin: '30px 0 30px 0' }}
                             />
                         </DialogContent>
                         <DialogActions>
-                            <Button onClick={closeSignUpPopup} color="primary">
-                                Назад
-          </Button>
-                            <Button onClick={closeSignUpPopup} color="primary">
-                                Войти
-          </Button>
+                            <Button  variant="contained" color="primary"  fullWidth>Далее</Button>
                         </DialogActions>
                     </Dialog>
                 </div>

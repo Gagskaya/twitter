@@ -29,7 +29,7 @@ export const theme = createMuiTheme({
       main: red.A400,
     },
     background: {
-      default: '#fff',
+      default: 'red',
     },
     text: {
       primary: '#14171a',
