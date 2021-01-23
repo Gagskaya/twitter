@@ -1,92 +1,136 @@
-import React from 'react'
+import React from "react";
 
+import {
+  Container,
+  createStyles,
+  Grid,
+  InputBase,
+  makeStyles,
+  Paper,
+  Theme,
+  Typography,
+  withStyles,
+} from "@material-ui/core";
+import grey from "@material-ui/core/colors/grey";
 
-import TwitterIcon from '@material-ui/icons/Twitter';
-import SearchIcon from '@material-ui/icons/Search';
-import HomeIcon from '@material-ui/icons/Home';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import { Container, createStyles, Grid, InputBase, makeStyles, Paper, Typography, withStyles } from '@material-ui/core';
-
-import IconButton from '@material-ui/core/IconButton';
-import MailOutlineIcon from '@material-ui/icons/MailOutline';
-import BookmarkIcon from '@material-ui/icons/Bookmark';
-import ListAltIcon from '@material-ui/icons/ListAlt';
-import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
-import MoreIcon from '@material-ui/icons/More';
-
-const useStyles = makeStyles(() => ({
+import { Tweet } from "../components/Tweet";
+import { SideMenu } from "../components/SideMenu";
+export const useStyles = makeStyles((theme: Theme) => ({
   sideMenuList: {
-
+    width: 230,
   },
   sideMenuListItem: {
-    display: 'flex',
-    alignItems: 'center'
+    "& div": {
+      marginBottom: 10,
+      display: "flex",
+      alignItems: "center",
+      borderRadius: 30,
+      padding: 10,
+      transition: "background-color 0.15s ease-in-out",
+      "&:hover": {
+        backgroundColor: "rgba(29,161,242,0.1)",
+        cursor: "pointer",
+        "& h6": {
+          color: theme.palette.primary.main,
+        },
+        "& svg": {
+          color: theme.palette.primary.main,
+        },
+      },
+    },
   },
   sideMenuListTitle: {
     fontWeight: 700,
-    fontSize: 20
+    fontSize: 20,
+    marginLeft: 20,
   },
   sideMenuListIcon: {
-    fontSize: 32
+    fontSize: 32,
+  },
+  sideMenuTweetButton: {
+    padding: theme.spacing(3.3),
+    margingTop: 30,
   },
   logo: {
-    fontSize: 36
+    fontSize: 36,
   },
   tweetsWrapper: {
-    height: '100%'
+    height: "auto",
   },
-  tweetsTitleWrap : {
-    padding : '10px 0 10px 0'
+  tweetsTitle: {
+    fontWeight: 800,
+    fontSize: 20,
   },
-  tweetsTitle : {
-    fontWeight : 800,
-    padding : '10px',
-    fontSize : 20,
-    borderBottom  : '1px solid #ccc'
-  }
+  tweetsHeader: {
+    padding: "15px",
+  },
+  tweetsUserName: {
+    color: grey[500],
+  },
+  tweetsText: {
+    fontSize: 16,
+  },
+  tweetsFooter: {
+    display: "flex",
+    justifyContent: "space-between",
+    maxWidth: "420px",
+  },
+  tweetsIcons: {
+    paddingLeft: 0,
+  },
+  tweets: {
+    "&:hover": {
+      backgroundColor: "rgb(245,248,250)",
+      cursor: "pointer",
+    },
+  },
 }));
 const SearchTextField = withStyles(() =>
   createStyles({
     input: {
       borderRadius: 30,
-      backgroundColor: '#E6ECF0',
-      padding: 10
-    }
-  }))(InputBase);
-export const Home = () => {
+      backgroundColor: "#E6ECF0",
+      padding: 10,
+    },
+  })
+)(InputBase);
+export const Home: React.FC = () => {
   const classes = useStyles();
   return (
-    <Container maxWidth='lg'>
+    <Container maxWidth="lg">
       <Grid container spacing={3}>
         <Grid item xs={3}>
-          <nav>
-            <ul>
-              <li className={classes.sideMenuListItem}><IconButton><TwitterIcon className={classes.logo} color='primary' /></IconButton></li>
-              <li className={classes.sideMenuListItem}><IconButton><HomeIcon className={classes.sideMenuListIcon} /></IconButton><Typography variant='h6' className={classes.sideMenuListTitle}>Главная</Typography></li>
-              <li className={classes.sideMenuListItem}><IconButton><SearchIcon className={classes.sideMenuListIcon} /></IconButton><Typography variant='h6' className={classes.sideMenuListTitle}>Поиск</Typography></li>
-              <li className={classes.sideMenuListItem}><IconButton><NotificationsIcon className={classes.sideMenuListIcon} /></IconButton><Typography variant='h6' className={classes.sideMenuListTitle}>Уведомления</Typography></li>
-              <li className={classes.sideMenuListItem}><IconButton><MailOutlineIcon className={classes.sideMenuListIcon} /></IconButton><Typography variant='h6' className={classes.sideMenuListTitle}>Сообщения</Typography></li>
-              <li className={classes.sideMenuListItem}><IconButton><BookmarkIcon className={classes.sideMenuListIcon} /></IconButton><Typography variant='h6' className={classes.sideMenuListTitle}>Закладки</Typography></li>
-              <li className={classes.sideMenuListItem}><IconButton><ListAltIcon className={classes.sideMenuListIcon} /></IconButton><Typography variant='h6' className={classes.sideMenuListTitle}>Списки</Typography></li>
-              <li className={classes.sideMenuListItem}><IconButton><PersonOutlineIcon className={classes.sideMenuListIcon} /></IconButton><Typography variant='h6' className={classes.sideMenuListTitle}>Профиль</Typography></li>
-              <li className={classes.sideMenuListItem}><IconButton><MoreIcon className={classes.sideMenuListIcon} /></IconButton><Typography variant='h6' className={classes.sideMenuListTitle}>Еще</Typography></li>
-            </ul>
-          </nav>
-
+          <SideMenu classes={classes} />
         </Grid>
         <Grid item xs={6}>
-          <Paper variant='outlined' className={classes.tweetsWrapper}> 
-          {/* <Paper variant='outlined' className={classes.tweetsTitleWrap}> */}
-            <Typography className={classes.tweetsTitle} variant='h6'>Главная</Typography>
-          {/* </Paper> */}
+          <Paper variant="outlined" className={classes.tweetsWrapper}>
+            <Paper className={classes.tweetsHeader}>
+              <Typography className={classes.tweetsTitle} variant="h6">
+                Главная
+              </Typography>
+            </Paper>
+            {[
+              new Array(20).fill(
+                <Tweet
+                  classes={classes}
+                  user={{
+                    avatar:
+                      "https://images.unsplash.com/photo-1590086782957-93c06ef21604?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTR8fG1hbnxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                    fullName: "Vitaly Kolesnikov",
+                    userName: "@MrFlipgraf",
+                  }}
+                  text="«Та организованная преступная группировка, которая сейчас у
+            власти, держится на нашем с вами страхе. Мы можем ничего не
+            делать, но дальше тогда будет только хуже»."
+                />
+              ),
+            ]}
           </Paper>
-          
         </Grid>
         <Grid item xs={3}>
-          <SearchTextField fullWidth placeholder='Поиск по Твиттеру' />
+          <SearchTextField fullWidth placeholder="Поиск по Твиттеру" />
         </Grid>
       </Grid>
     </Container>
-
-  )
-}
+  );
+};

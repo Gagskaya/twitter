@@ -1,42 +1,42 @@
 // @ts-nocheck
 
-import { createMuiTheme } from '@material-ui/core/styles';
-import { red } from '@material-ui/core/colors';
+import { createMuiTheme } from "@material-ui/core/styles";
+import { red } from "@material-ui/core/colors";
 
 export const theme = createMuiTheme({
   typography: {
     fontFamily: [
-      'system-ui',
-      '-apple-system',
-      'BlinkMacSystemFont',
-      'Segoe UI',
-      'Roboto',
-      'Ubuntu',
-      'Helvetica Neue',
-      'sans-serif',
+      "system-ui",
+      "-apple-system",
+      "BlinkMacSystemFont",
+      "Segoe UI",
+      "Roboto",
+      "Ubuntu",
+      "Helvetica Neue",
+      "sans-serif",
     ],
   },
   palette: {
     primary: {
-      main: 'rgb(29, 161, 242)',
-      dark: 'rgb(26, 145, 218)',
-      contrastText: '#fff',
+      main: "rgb(29, 161, 242)",
+      dark: "rgb(26, 145, 218)",
+      contrastText: "#fff",
     },
     secondary: {
-      main: 'rgb(26, 145, 218)',
+      main: "rgb(26, 145, 218)",
     },
     error: {
       main: red.A400,
     },
     background: {
-      default: 'red',
+      default: "red",
     },
     text: {
-      primary: '#14171a',
+      primary: "#14171a",
     },
     action: {
-      disabledBackground: 'rgb(153 216 255)',
-      disabled: '#fff',
+      disabledBackground: "rgb(153 216 255)",
+      disabled: "#fff",
     },
   },
   shadows: [],
@@ -44,7 +44,7 @@ export const theme = createMuiTheme({
     MuiButton: {
       root: {
         borderRadius: 30,
-        textTransform: 'none',
+        textTransform: "none",
         fontSize: 16,
         height: 40,
         fontWeight: 700,
@@ -54,21 +54,21 @@ export const theme = createMuiTheme({
         paddingRight: 20,
       },
       outlinedPrimary: {
-        borderColor: 'rgb(29, 161, 243)',
+        borderColor: "rgb(29, 161, 243)",
       },
     },
     MuiFilledInput: {
       underline: {
-        '&:after': {
-          borderBottomWidth: '2px',
+        "&:after": {
+          borderBottomWidth: "2px",
         },
-        '&:before': {
-          borderColor: '#000',
-          borderBottomWidth: '2px',
+        "&:before": {
+          borderColor: "#000",
+          borderBottomWidth: "2px",
         },
       },
       input: {
-        backgroundColor: 'rgb(245, 248, 250)',
+        backgroundColor: "rgb(245, 248, 250)",
       },
     },
     MuiDialog: {
@@ -83,15 +83,15 @@ export const theme = createMuiTheme({
     },
     MuiDialogTitle: {
       root: {
-        borderBottom: '1px solid rgb(204, 214, 221)',
+        borderBottom: "1px solid rgb(204, 214, 221)",
         marginBottom: 10,
-        padding: '10px 15px',
-        '& h2': {
-          display: 'flex',
-          alignItems: 'center',
+        padding: "10px 15px",
+        "& h2": {
+          display: "flex",
+          alignItems: "center",
           fontWeight: 800,
         },
-        '& button': {
+        "& button": {
           padding: 8,
           marginRight: 20,
         },
