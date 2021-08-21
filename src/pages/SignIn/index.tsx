@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Button, makeStyles, TextField, Typography } from "@material-ui/core";
+import { Button, TextField, Typography } from "@material-ui/core";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import PeopleOutlineIcon from "@material-ui/icons/PeopleOutline";
 import { SearchOutlined } from "@material-ui/icons";
@@ -10,111 +10,19 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import CloseIcon from "@material-ui/icons/Close";
-const useStyles = makeStyles(() => ({
-  wrapper: {
-    display: "flex",
-    height: "calc(100vh - 84px)",
-  },
-  blueSide: {
-    backgroundColor: "#71C9F8",
-    flexBasis: "50%",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    overflow: "hidden",
-    position: "relative",
-  },
-  blueSideBgIcon: {
-    position: "absolute",
-    left: "76%",
-    top: "53%",
-    transform: "translate(-50%,-50%)",
-    width: "250%",
-    height: "200%",
-  },
-  blueSideList: {
-    position: "relative",
-    width: 380,
-    "& h6": {
-      color: "white",
-      fontSize: 20,
-      marginLeft: 20,
-    },
-    "& li": {
-      display: "flex",
-      alignItems: "center",
-      marginBottom: 35,
-    },
-  },
-  blueSideListIcon: {
-    fontSize: 32,
-    color: "white",
-  },
-  loginSide: {
-    flexBasis: "50%",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  loginSideTwitterIcon: {
-    fontSize: 45,
-  },
-  loginSideWrapper: {
-    width: 380,
-  },
-  loginSideTitle: {
-    marginBottom: 50,
-    marginTop: 20,
-    fontWeight: 700,
-    fontSize: 30,
-  },
-  loginSideSubtitle: {
-    marginBottom: 15,
-    fontWeight: 700,
-    fontSize: 15,
-  },
-  loginSideSingUp: {
-    marginBottom: 10,
-  },
-  signInPopupTwitterIcon: {
-    position: "relative",
-    left: 173,
-    fontSize: 50,
-  },
-  signInPopupTitle: {
-    display: "flex",
-    justifyContent: "center",
-  },
-  signUpClosePopupIcon: {
-    marginRight: "20px",
-    cursor: "pointer",
-    color: "#33A5FF",
-  },
-  signUpPopupHeader: {
-    padding: 24,
-    display: "flex",
-    alignItems: "center",
-  },
-}));
+import { useStyles } from "../SignIn/theme";
+
 export const SignIn = () => {
   const classes = useStyles();
-  const [signInPopup, setSignInPopup] = React.useState(false);
-  const [signUpPopup, setSignUpPopup] = React.useState(false);
-
-  const openSignInPopup = () => {
-    setSignInPopup(true);
+  const [signInPopup, setSignInPopup] = React.useState<boolean>(false);
+  const [signUpPopup, setSignUpPopup] = React.useState<boolean>(false);
+  const toggleSignInPopup = () => {
+    setSignInPopup(!signInPopup);
+  };
+  const toggleSignUpPopup = () => {
+    setSignUpPopup(!signUpPopup);
   };
 
-  const closeSignInPopup = () => {
-    setSignInPopup(false);
-  };
-  const openSignUpPopup = () => {
-    setSignUpPopup(true);
-  };
-
-  const closeSignUpPopup = () => {
-    setSignUpPopup(false);
-  };
   return (
     <div className={classes.wrapper}>
       <section className={classes.blueSide}>
@@ -155,7 +63,7 @@ export const SignIn = () => {
             variant="contained"
             color="primary"
             fullWidth
-            onClick={openSignUpPopup}
+            onClick={toggleSignUpPopup}
             className={classes.loginSideSingUp}
           >
             Зарегистрироваться
@@ -164,13 +72,13 @@ export const SignIn = () => {
             variant="outlined"
             color="primary"
             fullWidth
-            onClick={openSignInPopup}
+            onClick={toggleSignInPopup}
           >
             Войти
           </Button>
           <Dialog
             open={signInPopup}
-            onClose={closeSignInPopup}
+            onClose={toggleSignInPopup}
             aria-labelledby="form-dialog-title"
           >
             <TwitterIcon
@@ -201,23 +109,23 @@ export const SignIn = () => {
               />
             </DialogContent>
             <DialogActions>
-              <Button onClick={closeSignInPopup} color="primary">
+              <Button onClick={toggleSignInPopup} color="primary">
                 Назад
               </Button>
-              <Button onClick={closeSignInPopup} color="primary">
+              <Button onClick={toggleSignInPopup} color="primary">
                 Войти
               </Button>
             </DialogActions>
           </Dialog>
           <Dialog
             open={signUpPopup}
-            onClose={closeSignUpPopup}
+            onClose={toggleSignUpPopup}
             aria-labelledby="form-dialog-title"
           >
             <div className={classes.signUpPopupHeader}>
               <CloseIcon
                 className={classes.signUpClosePopupIcon}
-                onClick={closeSignUpPopup}
+                onClick={toggleSignUpPopup}
               />
               <Typography variant="h6" component="h6">
                 Создайте учетную запись

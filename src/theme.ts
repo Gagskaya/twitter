@@ -71,6 +71,12 @@ export const theme = createMuiTheme({
         backgroundColor: "rgb(245, 248, 250)",
       },
     },
+    MuiAvatar: {
+      root: {
+        width: 49,
+        height: 49,
+      },
+    },
     MuiDialog: {
       paper: {
         borderRadius: 15,
