@@ -126,11 +126,17 @@ export const useStyles = makeStyles((theme: Theme) => ({
     alignItems: "center",
     justifyContent: "center",
     zIndex: 9999,
+    pointerEvents: "all",
   },
   rightSideMenuTagsPopupSpan: {
     padding: 12,
     fontSize: 16,
     cursor: "pointer",
+    "&:hover": {
+      backgroundColor: "#e5eaea",
+    },
+    width: "100%",
+    textAlign: "center",
   },
   suggestedProfilesCards: {},
   suggestedProfilesCard: {

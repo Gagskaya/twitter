@@ -4,12 +4,15 @@ import { Dispatch, SetStateAction } from "react";
 
 interface TagsPopupProps {
   classes: ReturnType<typeof useStyles>;
-  // handleClick: (id: number) => void;
+  handleClick: (id: number) => void;
+  id: number;
   setVisiblePopup: Dispatch<SetStateAction<boolean>>;
 }
 export const TagsPopup: React.FC<TagsPopupProps> = ({
   classes,
   setVisiblePopup,
+  handleClick,
+  id,
 }: TagsPopupProps) => {
   const ref = React.useRef<any>();
   const handleClickOutside = (event: any) => {
@@ -25,7 +28,12 @@ export const TagsPopup: React.FC<TagsPopupProps> = ({
   });
   return (
     <div className={classes.rightSideMenuTagsPopup} ref={ref}>
-      <span className={classes.rightSideMenuTagsPopupSpan}>Не интересно</span>
+      <span
+        className={classes.rightSideMenuTagsPopupSpan}
+        onClick={() => handleClick(id)}
+      >
+        Не интересно
+      </span>
       <span className={classes.rightSideMenuTagsPopupSpan}> Не интересно</span>
     </div>
   );

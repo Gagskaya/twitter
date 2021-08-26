@@ -37,7 +37,7 @@ export const RightSideMenu: React.FC<RightSideMenuProps> = ({
         </div>
 
         {tags?.map((tag) => (
-          <Tags tag={tag} classes={classes} />
+          <Tags tag={tag} classes={classes} key={tag.id} />
         ))}
       </div>
 
@@ -48,7 +48,11 @@ export const RightSideMenu: React.FC<RightSideMenuProps> = ({
 
         <div className={classes.suggestedProfilesCards}>
           {suggestedUsers?.map((suggestedUser) => (
-            <SuggestedUsers classes={classes} suggestedUser={suggestedUser} />
+            <SuggestedUsers
+              classes={classes}
+              suggestedUser={suggestedUser}
+              key={suggestedUser._id}
+            />
           ))}
         </div>
       </div>

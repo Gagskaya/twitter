@@ -16,12 +16,15 @@ export const Tags: React.FC<TagsProps> = ({ classes, tag }: TagsProps) => {
   const dispatch = useDispatch();
   const [visiblePopup, setVisiblePopup] = React.useState<boolean>(false);
   const handleClick = (id: number) => {
-    // dispatch(deleteTag(id));
+    dispatch(deleteTag(id));
     setVisiblePopup(!visiblePopup);
   };
+  React.useEffect(() => {
+    document.body.style.pointerEvents = visiblePopup ? "none" : "all";
+  }, [visiblePopup]);
   return (
-    <React.Fragment key={tag.id}>
-      <div className={classes.rightSideMenuCard} key={tag.id}>
+    <React.Fragment>
+      <div className={classes.rightSideMenuCard}>
         <div
           style={{
             display: "flex",
@@ -38,7 +41,8 @@ export const Tags: React.FC<TagsProps> = ({ classes, tag }: TagsProps) => {
         {visiblePopup && (
           <TagsPopup
             classes={classes}
-            // handleClick={handleClick}
+            handleClick={handleClick}
+            id={tag.id}
             setVisiblePopup={setVisiblePopup}
           />
         )}
