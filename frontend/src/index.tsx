@@ -8,14 +8,14 @@ import { App } from "./App";
 import { theme } from "./theme";
 import { store } from "./store/store";
 ReactDOM.render(
-  <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <Router>
-        <Provider store={store}>
-          <App />
-        </Provider>
-      </Router>
-    </ThemeProvider>
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <ThemeProvider theme={theme}>
+    <Router>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </Router>
+  </ThemeProvider>,
+  // </React.StrictMode>,
   document.getElementById("root")
 );

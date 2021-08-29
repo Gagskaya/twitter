@@ -11,11 +11,18 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import CloseIcon from "@material-ui/icons/Close";
 import { useStyles } from "../SignIn/theme";
+import axios from "axios";
 
 export const SignIn = () => {
   const classes = useStyles();
   const [signInPopup, setSignInPopup] = React.useState<boolean>(false);
   const [signUpPopup, setSignUpPopup] = React.useState<boolean>(false);
+
+  const [email, setEmail] = React.useState<string>("");
+  const [username, setUsername] = React.useState<string>("");
+  const [password, setPassword] = React.useState<string>("");
+  // const [errors, setErrors] = React.useState<string>("");
+
   const toggleSignInPopup = () => {
     setSignInPopup(!signInPopup);
   };
@@ -23,6 +30,28 @@ export const SignIn = () => {
     setSignUpPopup(!signUpPopup);
   };
 
+  const handleCreateUser = () => {
+    setEmail("");
+    setUsername("");
+    setPassword("");
+    axios
+      .post("http://localhost:8888/users", {
+        email: email,
+        username: username,
+        password: password,
+      })
+      .catch((e) => {
+        // setErrors(e.message);
+        console.log(e.message);
+      });
+  };
+  const handleLoginUser = () => {
+    const res = axios.post("http://localhost:8888/users/login", {
+      email: email,
+      password: password,
+    });
+    console.log(`res`, res);
+  };
   return (
     <div className={classes.wrapper}>
       <section className={classes.blueSide}>
@@ -99,6 +128,8 @@ export const SignIn = () => {
                 variant="filled"
                 fullWidth
                 style={{ marginBottom: "10px" }}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
               <TextField
                 autoFocus
@@ -106,13 +137,15 @@ export const SignIn = () => {
                 type="password"
                 variant="filled"
                 fullWidth
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </DialogContent>
             <DialogActions>
               <Button onClick={toggleSignInPopup} color="primary">
                 Назад
               </Button>
-              <Button onClick={toggleSignInPopup} color="primary">
+              <Button onClick={handleLoginUser} color="primary">
                 Войти
               </Button>
             </DialogActions>
@@ -139,6 +172,8 @@ export const SignIn = () => {
                 variant="filled"
                 fullWidth
                 style={{ margin: "5px 0 30px 0" }}
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
               />
               <TextField autoFocus label="E-mail" variant="filled" fullWidth />
               <TextField
@@ -148,10 +183,18 @@ export const SignIn = () => {
                 variant="filled"
                 fullWidth
                 style={{ margin: "30px 0 30px 0" }}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
+              <div style={{ color: "red" }}>asd</div>
             </DialogContent>
             <DialogActions>
-              <Button variant="contained" color="primary" fullWidth>
+              <Button
+                variant="contained"
+                color="primary"
+                fullWidth
+                onClick={handleCreateUser}
+              >
                 Далее
               </Button>
             </DialogActions>
