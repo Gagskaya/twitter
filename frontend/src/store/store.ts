@@ -6,6 +6,8 @@ import rootSaga from "./saga";
 import { Tweets } from "./ducks/tweets/contracts/state";
 import { Tags } from "./ducks/tags/contracts/state";
 import { SuggestedUsers } from "./ducks/suggestedUsers/contracts/state";
+import { User, UserState } from "./ducks/user/contracts/state";
+
 const sagaMiddleware = createSagaMiddleware();
 
 export const store = createStore(
@@ -16,5 +18,6 @@ export interface RootState {
   tweets: Tweets;
   tags: Tags;
   suggestedUsers: SuggestedUsers;
+  user: UserState;
 }
 sagaMiddleware.run(rootSaga);

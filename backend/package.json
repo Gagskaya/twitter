@@ -9,7 +9,7 @@
     "@types/jsonwebtoken": "^8.5.0",
     "@types/mongoose": "^5.11.97",
     "@types/nodemailer": "^6.4.4",
-    "@types/passport": "^1.0.4",
+    "@types/passport": "^1.0.7",
     "@types/passport-jwt": "^3.0.3",
     "@types/passport-local": "^1.0.33",
     "bcryptjs": "^2.4.3",
@@ -32,5 +32,9 @@
     "start": "node dist/server.js",
     "dev": "ts-node server.ts",
     "nodemon": "nodemon"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "@types/cors": "^2.8.12"
   }
 }

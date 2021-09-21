@@ -66,21 +66,21 @@ export const useStyles = makeStyles(() => ({
   loginSideSingUp: {
     marginBottom: 10,
   },
-  signInPopupTwitterIcon: {
+  loginPopupTwitterIcon: {
     position: "relative",
     left: 173,
     fontSize: 50,
   },
-  signInPopupTitle: {
+  loginPopupTitle: {
     display: "flex",
     justifyContent: "center",
   },
-  signUpClosePopupIcon: {
+  registerClosePopupIcon: {
     marginRight: "20px",
     cursor: "pointer",
     color: "#33A5FF",
   },
-  signUpPopupHeader: {
+  registerPopupHeader: {
     padding: 24,
     display: "flex",
     alignItems: "center",

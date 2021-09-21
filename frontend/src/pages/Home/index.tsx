@@ -44,7 +44,7 @@ export const Home: React.FC = () => {
                 <CircularProgress />
               </div>
             ) : (
-              tweets.map((tweet) => (
+              tweets?.map((tweet) => (
                 <Tweet
                   key={tweet._id}
                   classes={classes}
