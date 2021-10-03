@@ -1,9 +1,11 @@
 import produce, { Draft } from "immer";
-import { UserActions, UserActionsType } from "./actionCreators";
-import { User, UserState } from "./contracts/state";
+import { LoadingStatus } from "../../types";
+import { UserActions, UserActionsType } from "./contracts/actionTypes";
+import { UserState } from "./contracts/state";
 
-const initialTweetsState: UserState = {
+const initialUserState: UserState = {
   data: undefined,
+  loadingStatus: LoadingStatus.NEVER,
 };
 
 export const userReducer = produce(
@@ -11,10 +13,14 @@ export const userReducer = produce(
     switch (action.type) {
       case UserActionsType.SET_USER:
         draft.data = action.payload;
+        draft.loadingStatus = LoadingStatus.SUCCESS;
+        break;
+      case UserActionsType.SET_LOADING_STATUS:
+        draft.loadingStatus = action.payload;
         break;
       default:
         break;
     }
   },
-  initialTweetsState
+  initialUserState
 );

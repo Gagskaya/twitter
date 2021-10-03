@@ -15,7 +15,6 @@ passport.use(
         if (!user) {
           return done(null, false);
         }
-
         if (user.password === generateMD5(password + process.env.SECRET_KEY)) {
           done(null, user);
         } else {
@@ -34,15 +33,15 @@ passport.use(
       secretOrKey: process.env.SECRET_KEY || "123",
       jwtFromRequest: ExtractJwt.fromHeader("token"),
     },
-    async (payload: { data: UserModelInterface }, done) => {
+    async (payload: { data: UserModelInterface }, done): Promise<void> => {
       try {
         const user = await UserModel.findById(payload.data._id).exec();
         if (user) {
-          done(null, user);
+          return done(null, user);
         }
         done(null, false);
       } catch (error) {
-        done(error);
+        done(error, false);
       }
     }
   )

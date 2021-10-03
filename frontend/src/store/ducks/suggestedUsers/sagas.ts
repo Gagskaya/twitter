@@ -1,18 +1,19 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 import { suggestedUsersApi } from "../../../services/api/suggestedUsers";
+import { LoadingStatus } from "../../types";
 import {
   setSuggestedUsers,
-  setSuggestedUsersLoadingState,
-  SuggestedUsersActionsType,
+  setSuggestedUsersLoadingStatus,
 } from "./actionCreators";
-import { LoadingState } from "./contracts/state";
+import { SuggestedUsersActionsType } from "./contracts/actionTypes";
 
 export function* fetchSuggestedUsersRequest() {
   try {
+    yield put(setSuggestedUsersLoadingStatus(LoadingStatus.LOADING));
     const items = yield call(suggestedUsersApi.fetchSuggestedUsers);
     yield put(setSuggestedUsers(items));
   } catch (error) {
-    yield put(setSuggestedUsersLoadingState(LoadingState.ERROR));
+    yield put(setSuggestedUsersLoadingStatus(LoadingStatus.ERROR));
   }
 }
 

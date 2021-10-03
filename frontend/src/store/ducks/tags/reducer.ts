@@ -1,29 +1,30 @@
 import axios from "axios";
 import produce, { Draft } from "immer";
-import { TagsActions, TagsActionsType } from "./actionCreators";
-import { LoadingState, Tags } from "./contracts/state";
+import { LoadingStatus } from "../../types";
+import { TagsActions, TagsActionsType } from "./contracts/actionTypes";
+import { Tags } from "./contracts/state";
 
-const initialTweetsState: Tags = {
+const initilTagsState: Tags = {
   items: [],
-  loadingState: LoadingState.NEVER,
+  loadingStatus: LoadingStatus.NEVER,
 };
 
 export const tagsReducer = produce(
   (draft: Draft<Tags>, action: TagsActions) => {
     if (action.type === TagsActionsType.SET_TAGS) {
       draft.items = action.payload;
-      draft.loadingState = LoadingState.LOADED;
+      draft.loadingStatus = LoadingStatus.LOADED;
     }
     if (action.type === TagsActionsType.FETCH_TAGS) {
-      draft.loadingState = LoadingState.LOADING;
+      draft.loadingStatus = LoadingStatus.LOADING;
     }
-    if (action.type === TagsActionsType.SET_LOADING_STATE) {
-      draft.loadingState = action.payload;
+    if (action.type === TagsActionsType.SET_LOADING_STATUS) {
+      draft.loadingStatus = action.payload;
     }
     if (action.type === TagsActionsType.DELETE_TAG) {
       draft.items = draft.items.filter((item) => action.payload !== item.id);
       axios.delete(`http://localhost:3001/tags/${action.payload}`);
     }
   },
-  initialTweetsState
+  initilTagsState
 );

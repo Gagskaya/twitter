@@ -28,7 +28,7 @@ app.get(
 );
 app.get("/users/:id", UserCtrl.show);
 
-app.post("/auth/register", registerValidations, UserCtrl.create);
+app.post("/auth/register", UserCtrl.create);
 app.post("/auth/login", passport.authenticate("local"), UserCtrl.login);
 app.get("/auth/verify", registerValidations, UserCtrl.verify);
 

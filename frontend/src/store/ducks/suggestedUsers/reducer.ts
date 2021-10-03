@@ -1,30 +1,32 @@
 import produce, { Draft } from "immer";
+import { LoadingStatus } from "../../types";
 import {
   SuggestedUsersActions,
   SuggestedUsersActionsType,
-} from "./actionCreators";
-import { LoadingState, SuggestedUsers } from "./contracts/state";
+} from "./contracts/actionTypes";
 
-const initialTweetsState: SuggestedUsers = {
+import { SuggestedUsers } from "./contracts/state";
+
+const initialSuggestedUsersState: SuggestedUsers = {
   items: [],
-  loadingState: LoadingState.NEVER,
+  loadingStatus: LoadingStatus.NEVER,
 };
 
 export const suggestedUsersReducer = produce(
   (draft: Draft<SuggestedUsers>, action: SuggestedUsersActions) => {
     if (action.type === SuggestedUsersActionsType.SET_SUGGESTED_USERS) {
       draft.items = action.payload;
-      draft.loadingState = LoadingState.LOADED;
+      draft.loadingStatus = LoadingStatus.LOADED;
     }
     if (action.type === SuggestedUsersActionsType.FETCH_SUGGESTED_USERS) {
-      draft.loadingState = LoadingState.LOADING;
+      draft.loadingStatus = LoadingStatus.LOADING;
     }
-    if (action.type === SuggestedUsersActionsType.SET_LOADING_STATE) {
-      draft.loadingState = action.payload;
+    if (action.type === SuggestedUsersActionsType.SET_LOADING_STATUS) {
+      draft.loadingStatus = action.payload;
     }
-    if (action.type === SuggestedUsersActionsType.SET_LOADING_STATE) {
-      draft.loadingState = action.payload;
+    if (action.type === SuggestedUsersActionsType.SET_LOADING_STATUS) {
+      draft.loadingStatus = action.payload;
     }
   },
-  initialTweetsState
+  initialSuggestedUsersState
 );

@@ -2,7 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 
-import { validationResult } from "express-validator";
+// import { validationResult } from "express-validator";
 import {
   UserModel,
   UserModelDocumentInterface,
@@ -27,11 +27,12 @@ class UserController {
   }
   async create(req: express.Request, res: express.Response): Promise<void> {
     try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        res.status(400).json({ status: "error", errors: errors.array() });
-        return;
-      }
+      // const errors = validationResult(req);
+      // if (!errors.isEmpty()) {
+      //   res.status(450).json({ status: "error", errors: errors.array() });
+      //   return;
+      // }
+      console.log(req.body);
       const randomStr = Math.random().toString();
       const data: UserModelInterface = {
         email: req.body.email,
@@ -128,9 +129,10 @@ class UserController {
     try {
       const user =
         req.user && (req.user as UserModelDocumentInterface).toJSON();
+
       res.json({
-        status: "succes",
-        data: {
+        status: "success",
+        user: {
           ...user,
           token: jwt.sign({ data: req.user }, process.env.SECRET_KEY || "123", {
             expiresIn: "30d",
@@ -150,7 +152,7 @@ class UserController {
         req.user && (req.user as UserModelDocumentInterface).toJSON();
       res.json({
         status: "success",
-        data: user,
+        user: user,
       });
     } catch (error) {
       res.status(500).json({

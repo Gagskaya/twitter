@@ -1,9 +1,5 @@
-export enum LoadingState {
-  LOADING = "LOADING",
-  LOADED = "LOADED",
-  ERROR = "ERROR",
-  NEVER = "NEVER",
-}
+import { LoadingStatus } from "../../../types";
+
 export interface SuggestedUser {
   _id: string;
   user: {
@@ -14,5 +10,5 @@ export interface SuggestedUser {
 }
 export interface SuggestedUsers {
   items: SuggestedUser[];
-  loadingState: LoadingState;
+  loadingStatus: LoadingStatus;
 }

@@ -1,9 +1,5 @@
-export enum LoadingState {
-  LOADING = "LOADING",
-  LOADED = "LOADED",
-  ERROR = "ERROR",
-  NEVER = "NEVER",
-}
+import { LoadingStatus } from "../../../types";
+
 export interface User {
   _id?: string;
   email: string;
@@ -20,6 +16,7 @@ export interface User {
 
 export interface UserState {
   data: User | undefined;
+  loadingStatus?: LoadingStatus;
 }
 export interface LoginFormProps {
   email: string;

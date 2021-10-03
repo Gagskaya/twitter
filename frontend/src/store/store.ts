@@ -6,7 +6,7 @@ import rootSaga from "./saga";
 import { Tweets } from "./ducks/tweets/contracts/state";
 import { Tags } from "./ducks/tags/contracts/state";
 import { SuggestedUsers } from "./ducks/suggestedUsers/contracts/state";
-import { User, UserState } from "./ducks/user/contracts/state";
+import { UserState } from "./ducks/user/contracts/state";
 
 const sagaMiddleware = createSagaMiddleware();
 
