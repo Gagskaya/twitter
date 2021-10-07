@@ -9,36 +9,41 @@ import { Home } from "./pages/Home";
 import { SignIn } from "./pages/SignIn";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  selectIsAuth,
   selectUserLoadingStatus,
+  selectUserLoginLoadingStatus,
+  selectUserRegisterLoadingStatus,
 } from "./store/ducks/user/selectors";
 import { fetchUserData } from "./store/ducks/user/actionCreators";
 import { LoadingStatus } from "./store/types";
 import { useStyles } from "./pages/Home/theme";
 
 export const App = () => {
-  const isAuth = useSelector(selectIsAuth);
+  const token = localStorage.getItem("token");
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
   const loadingStatus = useSelector(selectUserLoadingStatus);
-  const isReady =
-    loadingStatus !== LoadingStatus.NEVER &&
-    loadingStatus !== LoadingStatus.LOADING;
+  const registerLoadingStatus = useSelector(selectUserRegisterLoadingStatus);
+  const loginLoadingStatus = useSelector(selectUserLoginLoadingStatus);
 
   React.useEffect(() => {
-    dispatch(fetchUserData());
-  }, [dispatch]);
+    if (token) {
+      dispatch(fetchUserData());
+    }
+  }, [dispatch, token]);
   React.useEffect(() => {
-    if (!isAuth && isReady) {
+    if (!token) {
       history.push("/signin");
-    } else if (history.location.pathname === "/") {
-      history.push("/home");
     } else {
       history.push("/home");
     }
-  }, [isAuth, isReady, history]);
-  if (!isReady) {
+  }, [history, token]);
+
+  if (
+    loadingStatus === LoadingStatus.LOADING ||
+    registerLoadingStatus === LoadingStatus.LOADING ||
+    loginLoadingStatus === LoadingStatus.LOADING
+  ) {
     return (
       <div className={classes.centered}>
         <TwitterIcon color="primary" style={{ width: 80, height: 80 }} />

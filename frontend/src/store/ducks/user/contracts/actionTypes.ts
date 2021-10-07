@@ -1,16 +1,29 @@
 import { Action } from "redux";
 import { LoadingStatus } from "../../../types";
-import { LoginFormProps, User } from "./state";
+import { LoginFormProps, RegisterFormProps, User } from "./state";
 
 export enum UserActionsType {
   SET_USER = "user/SET_USER",
-  FETCH_USER_SIGNIN = "user/FETCH_USER_SIGNIN",
+  FETCH_USER_LOGIN = "user/FETCH_USER_LOGIN",
+  FETCH_USER_REGISTER = "user/FETCH_USER_REGISTER",
   FETCH_USER_DATA = "user/FETCH_USER_DATA",
   SET_LOADING_STATUS = "user/SET_LOADING_STATUS",
+  SET_REGISTER_LOADING_STATUS = "user/SET_REGISTER_LOADING_STATUS",
+  SET_LOGIN_LOADING_STATUS = "user/SET_LOGIN_LOADING_STATUS",
 }
 
 export interface SetUserLoadingStatusAction extends Action<UserActionsType> {
   type: UserActionsType.SET_LOADING_STATUS;
+  payload: LoadingStatus;
+}
+export interface SetUserRegisterLoadingStatusAction
+  extends Action<UserActionsType> {
+  type: UserActionsType.SET_REGISTER_LOADING_STATUS;
+  payload: LoadingStatus;
+}
+export interface SetUserLoginLoadingStatusAction
+  extends Action<UserActionsType> {
+  type: UserActionsType.SET_LOGIN_LOADING_STATUS;
   payload: LoadingStatus;
 }
 export interface SetUserAction extends Action<UserActionsType> {
@@ -18,8 +31,12 @@ export interface SetUserAction extends Action<UserActionsType> {
   payload: User;
 }
 
-export interface FetchUserSignInAction extends Action<UserActionsType> {
-  type: UserActionsType.FETCH_USER_SIGNIN;
+export interface FetchUserRegisterAction extends Action<UserActionsType> {
+  type: UserActionsType.FETCH_USER_REGISTER;
+  payload: RegisterFormProps;
+}
+export interface FetchUserLoginAction extends Action<UserActionsType> {
+  type: UserActionsType.FETCH_USER_LOGIN;
   payload: LoginFormProps;
 }
 export interface FetchUserDataAction extends Action<UserActionsType> {
@@ -28,6 +45,8 @@ export interface FetchUserDataAction extends Action<UserActionsType> {
 
 export type UserActions =
   | SetUserAction
-  | FetchUserSignInAction
+  | FetchUserLoginAction
   | FetchUserDataAction
-  | SetUserLoadingStatusAction;
+  | SetUserLoadingStatusAction
+  | SetUserRegisterLoadingStatusAction
+  | SetUserLoginLoadingStatusAction;

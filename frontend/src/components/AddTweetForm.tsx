@@ -15,7 +15,6 @@ export const AddTweetForm: React.FC<AddTweetFormProps> = ({
 }: AddTweetFormProps): React.ReactElement => {
   const [text, setText] = React.useState<string>("");
   const MAX_LENGTH = 280;
-
   const textLimitPercent = (text.length / MAX_LENGTH) * 100;
   const textCount = MAX_LENGTH - text.length;
   const onAddTweet = () => {

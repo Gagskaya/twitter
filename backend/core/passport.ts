@@ -1,5 +1,5 @@
 import passport from "passport";
-import { UserModel, UserModelInterface } from "../models/UserModel";
+import { UserModel, UserModelI } from "../models/UserModel";
 import { Strategy as LocalStrategy } from "passport-local";
 import { ExtractJwt, Strategy as JwtStrategy } from "passport-jwt";
 import { generateMD5 } from "../utils/generateHash";
@@ -33,7 +33,7 @@ passport.use(
       secretOrKey: process.env.SECRET_KEY || "123",
       jwtFromRequest: ExtractJwt.fromHeader("token"),
     },
-    async (payload: { data: UserModelInterface }, done): Promise<void> => {
+    async (payload: { data: UserModelI }, done): Promise<void> => {
       try {
         const user = await UserModel.findById(payload.data._id).exec();
         if (user) {

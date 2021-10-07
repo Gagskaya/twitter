@@ -1,7 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-// import bodyParser from "body-parser";
 
 import "./core/db";
 
@@ -15,8 +14,7 @@ import { TweetsCtrl } from "./controllers/TweetsController";
 const app = express();
 
 app.use(express.json());
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use(passport.initialize());
 app.use(cors());
 

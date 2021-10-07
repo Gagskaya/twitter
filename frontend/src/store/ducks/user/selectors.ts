@@ -8,12 +8,10 @@ export const selectIsAuth = (state: RootState): boolean =>
 export const selectUserLoadingStatus = (
   state: RootState
 ): UserState["loadingStatus"] => selectUser(state).loadingStatus;
-
-// export const selectTagsItems = createSelector(selectTags, (tags) => tags.items);
-
-// export const selectLoadingState = (state: RootState): LoadingState =>
-//   state.tags.loadingState;
-// export const selectIsTagsLoading = (state: RootState): boolean =>
-//   selectLoadingState(state) === LoadingState.LOADING;
-// export const selectIsTagsLoaded = (state: RootState): boolean =>
-//   selectLoadingState(state) === LoadingState.LOADED;
+export const selectUserRegisterLoadingStatus = (
+  state: RootState
+): UserState["registerLoadingStatus"] =>
+  selectUser(state).registerLoadingStatus;
+export const selectUserLoginLoadingStatus = (
+  state: RootState
+): UserState["loginLoadingStatus"] => selectUser(state).loginLoadingStatus;

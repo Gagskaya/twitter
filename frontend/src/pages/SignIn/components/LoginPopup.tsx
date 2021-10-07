@@ -6,29 +6,30 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import DialogTitle from "@material-ui/core/DialogTitle";
-
 import { useStyles } from "../theme";
 import { Button, TextField } from "@material-ui/core";
 import { useForm, Controller } from "react-hook-form";
 import { LoginFormProps } from "../../../store/ducks/user/contracts/state";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useDispatch } from "react-redux";
-import {
-  fetchUserData,
-  fetchUserSignIn,
-} from "../../../store/ducks/user/actionCreators";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUserLogin } from "../../../store/ducks/user/actionCreators";
 
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { selectUserLoginLoadingStatus } from "../../../store/ducks/user/selectors";
+import { LoadingStatus } from "../../../store/types";
+toast.configure();
 const schema = yup
   .object({
     email: yup
       .string()
-      .email("Invalid email format")
-      .required("This field is required"),
+      .email("Неверный формат почты")
+      .required("Это поле обязательно"),
     password: yup
       .string()
-      .required("This field is required")
-      .min(8, "Password is too short - should be 8 chars minimum.")
-      .matches(/[a-zA-Z]/, "Password can only contain Latin letters."),
+      .required("Это поле обязательно")
+      .min(8, "Слишком короткий пароль.")
+      .matches(/[a-zA-Z]/, "Пароль может содержать только латинские буквы"),
   })
   .required();
 
@@ -37,20 +38,34 @@ interface LoginPopupProps {
   loginPopup: boolean;
   toggleLoginPopup: () => void;
 }
+
 export const LoginPopup: React.FC<LoginPopupProps> = ({
   classes,
   loginPopup,
   toggleLoginPopup,
 }: LoginPopupProps) => {
   const dispatch = useDispatch();
-  const { handleSubmit, control } = useForm({
+  const loginLoadingStatus = useSelector(selectUserLoginLoadingStatus);
+
+  const { handleSubmit, control } = useForm<LoginFormProps>({
     resolver: yupResolver(schema),
   });
-  const onSubmit = (data: LoginFormProps) => {
-    dispatch(fetchUserSignIn({ email: data.email, password: data.password }));
-    dispatch(fetchUserData());
-  };
 
+  const onSubmit = (data: LoginFormProps) => {
+    dispatch(fetchUserLogin({ email: data.email, password: data.password }));
+  };
+  React.useEffect(() => {
+    if (loginLoadingStatus === LoadingStatus.SUCCESS) {
+      toast.success("Authorization success ", {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    } else if (loginLoadingStatus === LoadingStatus.ERROR) {
+      toast.error(
+        "Authorization error. Please check the spelling of your e-mail and password",
+        { position: toast.POSITION.TOP_CENTER }
+      );
+    }
+  }, [loginLoadingStatus]);
   return (
     <Dialog
       open={loginPopup}
@@ -91,8 +106,9 @@ export const LoginPopup: React.FC<LoginPopupProps> = ({
             render={({ field: { onChange, value }, fieldState: { error } }) => (
               <TextField
                 style={{ marginBottom: "10px" }}
-                label="Password"
+                label="Пароль"
                 variant="filled"
+                type="password"
                 value={value}
                 fullWidth
                 autoFocus
@@ -104,7 +120,9 @@ export const LoginPopup: React.FC<LoginPopupProps> = ({
           />
         </DialogContent>
         <DialogActions>
-          <Button color="primary">Назад</Button>
+          <Button color="primary" onClick={toggleLoginPopup}>
+            Назад
+          </Button>
           <Button color="primary" type="submit">
             Войти
           </Button>

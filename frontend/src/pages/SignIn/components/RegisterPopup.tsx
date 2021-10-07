@@ -1,5 +1,5 @@
 import React from "react";
-import axios from "axios";
+
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -11,25 +11,35 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, TextField, Typography } from "@material-ui/core";
 import { useStyles } from "../theme";
 import { useForm, Controller } from "react-hook-form";
+import { fetchUserRegister } from "../../../store/ducks/user/actionCreators";
+import { useDispatch, useSelector } from "react-redux";
+import { selectUserRegisterLoadingStatus } from "../../../store/ducks/user/selectors";
+
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { LoadingStatus } from "../../../store/types";
+import { RegisterFormProps } from "../../../store/ducks/user/contracts/state";
 
 const schema = yup
   .object({
-    username: yup.string().required("This field is required"),
+    username: yup.string().required("Это поле обязательно"),
+    fullname: yup.string().required("Это поле обязательно"),
     email: yup
       .string()
-      .email("Invalid email format")
-      .required("This field is required"),
+      .email("Неверный формат почты")
+      .required("Это поле обязательно"),
     password: yup
       .string()
-      .required("This field is required")
-      .min(8, "Password is too short - should be 8 chars minimum.")
-      .matches(/[a-zA-Z]/, "Password can only contain Latin letters."),
-    password2: yup
+      .required("Это поле обязательно")
+      .min(8, "Пароль слишком короткий. Минимум 8 символов")
+      .matches(/[a-zA-Z]/, "Пароль может содержать только латинские буквы"),
+    confirmPassword: yup
       .string()
-      .oneOf([yup.ref("password"), null], "Passwords must match")
-      .required("This field is required"),
+      .oneOf([yup.ref("password"), null], "Пароли должны совпадать")
+      .required("Это поле обязательно"),
   })
   .required();
+toast.configure();
 
 interface RegisterPopupProps {
   classes: ReturnType<typeof useStyles>;
@@ -41,17 +51,33 @@ export const RegisterPopup: React.FC<RegisterPopupProps> = ({
   classes,
   toggleRegisterPopup,
 }: RegisterPopupProps) => {
+  const dispatch = useDispatch();
+  const registerLoadingStatus = useSelector(selectUserRegisterLoadingStatus);
   const { handleSubmit, control } = useForm({
     resolver: yupResolver(schema),
   });
-  const onSubmit = (data: any) => {
-    axios.post("http://localhost:8888/auth/register", {
+  const onSubmit = (data: RegisterFormProps) => {
+    const user = {
       username: data.username,
       email: data.email,
+      fullname: data.fullname,
       password: data.password,
-      password2: data.password2,
-    });
+      confirmPassword: data.confirmPassword,
+    };
+    dispatch(fetchUserRegister(user));
   };
+  React.useEffect(() => {
+    if (registerLoadingStatus === LoadingStatus.SUCCESS) {
+      toast.success("Авторизация успешна.", {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    } else if (registerLoadingStatus === LoadingStatus.ERROR) {
+      toast.error(
+        "Пользователь с таким e-mail или логином уже существует. Попробуйте заново",
+        { position: toast.POSITION.TOP_CENTER }
+      );
+    }
+  }, [registerLoadingStatus]);
   return (
     <Dialog
       aria-labelledby="form-dialog-title"
@@ -71,14 +97,13 @@ export const RegisterPopup: React.FC<RegisterPopupProps> = ({
 
         <DialogContent>
           <Controller
-            name="username"
+            name="email"
             control={control}
             defaultValue=""
-            rules={{ required: "Username is requied" }}
             render={({ field: { onChange, value }, fieldState: { error } }) => (
               <TextField
                 style={{ marginBottom: "10px" }}
-                label="Username"
+                label="E-mail"
                 variant="filled"
                 value={value}
                 fullWidth
@@ -90,13 +115,33 @@ export const RegisterPopup: React.FC<RegisterPopupProps> = ({
             )}
           />
           <Controller
-            name="email"
+            name="username"
+            control={control}
+            defaultValue=""
+            rules={{ required: "Nребуется логин" }}
+            render={({ field: { onChange, value }, fieldState: { error } }) => (
+              <TextField
+                style={{ marginBottom: "10px" }}
+                label="Логин"
+                variant="filled"
+                value={value}
+                fullWidth
+                autoFocus
+                error={!!error}
+                helperText={error ? error.message : null}
+                onChange={onChange}
+              />
+            )}
+          />
+
+          <Controller
+            name="fullname"
             control={control}
             defaultValue=""
             render={({ field: { onChange, value }, fieldState: { error } }) => (
               <TextField
                 style={{ marginBottom: "10px" }}
-                label="E-mail"
+                label="Полное имя"
                 variant="filled"
                 value={value}
                 fullWidth
@@ -115,9 +160,10 @@ export const RegisterPopup: React.FC<RegisterPopupProps> = ({
             render={({ field: { onChange, value }, fieldState: { error } }) => (
               <TextField
                 style={{ marginBottom: "10px" }}
-                label="Password"
+                label="Пароль"
                 variant="filled"
                 value={value}
+                type="password"
                 fullWidth
                 autoFocus
                 onChange={onChange}
@@ -127,13 +173,14 @@ export const RegisterPopup: React.FC<RegisterPopupProps> = ({
             )}
           />
           <Controller
-            name="password2"
+            name="confirmPassword"
             control={control}
             defaultValue=""
             render={({ field: { onChange, value }, fieldState: { error } }) => (
               <TextField
                 style={{ marginBottom: "10px" }}
-                label="Confirm password"
+                label="Подтвердите пароль"
+                type="password"
                 variant="filled"
                 value={value}
                 fullWidth
@@ -146,13 +193,7 @@ export const RegisterPopup: React.FC<RegisterPopupProps> = ({
           />
         </DialogContent>
         <DialogActions>
-          <Button
-            variant="contained"
-            color="primary"
-            fullWidth
-            // onClick={toggleRegisterPopup}
-            type="submit"
-          >
+          <Button variant="contained" color="primary" fullWidth type="submit">
             Далее
           </Button>
         </DialogActions>

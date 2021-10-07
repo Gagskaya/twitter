@@ -14,13 +14,15 @@ import {
   selectTweetsItems,
 } from "../../store/ducks/tweets/selectors";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import { selectUser } from "../../store/ducks/user/selectors";
 
 export const Home: React.FC = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const tweets = useSelector(selectTweetsItems);
   const isLoading = useSelector(selectIsTweetsLoading);
-
+  const user = useSelector(selectUser);
+  console.log(user);
   React.useEffect(() => {
     dispatch(fetchTweets());
   }, [dispatch]);

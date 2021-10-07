@@ -10,7 +10,7 @@ export interface TweetsModelI {
   text: string;
 }
 
-export type TweetsModelDocumentInterface = TweetsModelI & Document;
+export type TweetsModelDocumentI = TweetsModelI & Document;
 const TweetsSchema = new Schema({
   text: String,
   user: {
@@ -28,7 +28,4 @@ const TweetsSchema = new Schema({
     },
   },
 });
-export const TweetsModel = model<TweetsModelDocumentInterface>(
-  "Tweets",
-  TweetsSchema
-);
+export const TweetsModel = model<TweetsModelDocumentI>("Tweets", TweetsSchema);

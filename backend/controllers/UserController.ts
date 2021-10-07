@@ -2,14 +2,10 @@ import express from "express";
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 
-// import { validationResult } from "express-validator";
-import {
-  UserModel,
-  UserModelDocumentInterface,
-  UserModelInterface,
-} from "../models/UserModel";
+import { UserModel, UserModelDocumentI, UserModelI } from "../models/UserModel";
 import { generateMD5 } from "../utils/generateHash";
 import { sendEmail } from "../utils/sendEmail";
+import { validationResult } from "express-validator";
 
 const isValidObjectId = mongoose.Types.ObjectId.isValid;
 
@@ -27,17 +23,17 @@ class UserController {
   }
   async create(req: express.Request, res: express.Response): Promise<void> {
     try {
-      // const errors = validationResult(req);
-      // if (!errors.isEmpty()) {
-      //   res.status(450).json({ status: "error", errors: errors.array() });
-      //   return;
-      // }
-      console.log(req.body);
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        res.status(450).json({ status: "error", errors: errors.array() });
+        return;
+      }
       const randomStr = Math.random().toString();
-      const data: UserModelInterface = {
+      const data: UserModelI = {
         email: req.body.email,
         username: req.body.username,
         password: generateMD5(req.body.password + process.env.SECRET_KEY),
+        fullname: req.body.fullname,
         confirmHash: generateMD5(
           process.env.SECRET_KEY + randomStr || randomStr
         ),
@@ -127,8 +123,7 @@ class UserController {
   }
   async login(req: express.Request, res: express.Response) {
     try {
-      const user =
-        req.user && (req.user as UserModelDocumentInterface).toJSON();
+      const user = req.user && (req.user as UserModelDocumentI).toJSON();
 
       res.json({
         status: "success",
@@ -148,8 +143,7 @@ class UserController {
   }
   async getUserInfo(req: express.Request, res: express.Response) {
     try {
-      const user =
-        req.user && (req.user as UserModelDocumentInterface).toJSON();
+      const user = req.user && (req.user as UserModelDocumentI).toJSON();
       res.json({
         status: "success",
         user: user,

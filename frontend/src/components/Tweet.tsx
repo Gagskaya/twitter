@@ -12,8 +12,8 @@ import { useStyles } from "../pages/Home/theme";
 interface TweetProps {
   classes: ReturnType<typeof useStyles>;
   user: {
-    fullName: string;
-    userName: string;
+    fullname: string;
+    username: string;
     avatar: string;
   };
   text: string;
@@ -31,14 +31,14 @@ export const Tweet: React.FC<TweetProps> = ({
       <div style={{ display: "flex" }}>
         <div>
           <Avatar
-            alt={`Аватарка пользователя ${user.userName}`}
+            alt={`Аватарка пользователя ${user.username}`}
             src={user.avatar}
           />
         </div>
 
         <div style={{ marginLeft: "10px" }}>
-          <b>{user.fullName}</b>{" "}
-          <span className={classes.tweetsUserName}>{user.userName}</span>
+          <b>{user.fullname}</b>{" "}
+          <span className={classes.tweetsUserName}>@{user.username}</span>
           <Typography
             variant="body1"
             gutterBottom

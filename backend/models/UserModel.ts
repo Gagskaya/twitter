@@ -1,9 +1,10 @@
 import { model, Schema, Document } from "mongoose";
 
-export interface UserModelInterface {
+export interface UserModelI {
   _id?: string;
   email: string;
   username: string;
+  fullname: string;
   password: string;
   confirmHash: string;
   confirmed?: boolean;
@@ -13,14 +14,17 @@ export interface UserModelInterface {
   tweets?: string[];
 }
 
-export type UserModelDocumentInterface = UserModelInterface & Document;
+export type UserModelDocumentI = UserModelI & Document;
 const UserSchema = new Schema({
   email: {
     unique: true,
     required: true,
     type: String,
   },
-
+  fullname: {
+    required: true,
+    type: String,
+  },
   username: {
     unique: true,
     required: true,
@@ -51,4 +55,4 @@ UserSchema.set("toJSON", {
     return obj;
   },
 });
-export const UserModel = model<UserModelDocumentInterface>("User", UserSchema);
+export const UserModel = model<UserModelDocumentI>("User", UserSchema);

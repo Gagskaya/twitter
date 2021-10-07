@@ -6,6 +6,8 @@ import { UserState } from "./contracts/state";
 const initialUserState: UserState = {
   data: undefined,
   loadingStatus: LoadingStatus.NEVER,
+  registerLoadingStatus: LoadingStatus.NEVER,
+  loginLoadingStatus: LoadingStatus.NEVER,
 };
 
 export const userReducer = produce(
@@ -17,6 +19,12 @@ export const userReducer = produce(
         break;
       case UserActionsType.SET_LOADING_STATUS:
         draft.loadingStatus = action.payload;
+        break;
+      case UserActionsType.SET_LOGIN_LOADING_STATUS:
+        draft.loginLoadingStatus = action.payload;
+        break;
+      case UserActionsType.SET_REGISTER_LOADING_STATUS:
+        draft.registerLoadingStatus = action.payload;
         break;
       default:
         break;
