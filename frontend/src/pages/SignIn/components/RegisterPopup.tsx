@@ -68,7 +68,7 @@ export const RegisterPopup: React.FC<RegisterPopupProps> = ({
   };
   React.useEffect(() => {
     if (registerLoadingStatus === LoadingStatus.SUCCESS) {
-      toast.success("Авторизация успешна.", {
+      toast.success("Регистрация успешна. Войдите", {
         position: toast.POSITION.TOP_CENTER,
       });
     } else if (registerLoadingStatus === LoadingStatus.ERROR) {
@@ -118,7 +118,7 @@ export const RegisterPopup: React.FC<RegisterPopupProps> = ({
             name="username"
             control={control}
             defaultValue=""
-            rules={{ required: "Nребуется логин" }}
+            rules={{ required: "Требуется логин" }}
             render={({ field: { onChange, value }, fieldState: { error } }) => (
               <TextField
                 style={{ marginBottom: "10px" }}

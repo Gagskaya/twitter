@@ -29,15 +29,11 @@ export const App = () => {
   React.useEffect(() => {
     if (token) {
       dispatch(fetchUserData());
-    }
-  }, [dispatch, token]);
-  React.useEffect(() => {
-    if (!token) {
-      history.push("/signin");
-    } else {
       history.push("/home");
+    } else {
+      history.push("/signin");
     }
-  }, [history, token]);
+  }, [dispatch, token, history]);
 
   if (
     loadingStatus === LoadingStatus.LOADING ||

@@ -18,7 +18,9 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { selectUserLoginLoadingStatus } from "../../../store/ducks/user/selectors";
 import { LoadingStatus } from "../../../store/types";
+
 toast.configure();
+
 const schema = yup
   .object({
     email: yup
@@ -56,16 +58,17 @@ export const LoginPopup: React.FC<LoginPopupProps> = ({
   };
   React.useEffect(() => {
     if (loginLoadingStatus === LoadingStatus.SUCCESS) {
-      toast.success("Authorization success ", {
+      toast.success("Авторизация успешна ", {
         position: toast.POSITION.TOP_CENTER,
       });
     } else if (loginLoadingStatus === LoadingStatus.ERROR) {
       toast.error(
-        "Authorization error. Please check the spelling of your e-mail and password",
+        "Ошибка авторизации. Проверьте пожалуйста правильно ввода e-mail и пароля",
         { position: toast.POSITION.TOP_CENTER }
       );
     }
   }, [loginLoadingStatus]);
+
   return (
     <Dialog
       open={loginPopup}

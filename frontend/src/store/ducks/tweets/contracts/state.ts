@@ -1,12 +1,8 @@
 import { LoadingStatus } from "../../../types";
 
 export interface Tweet {
-  _id: string;
-  user: {
-    fullname: string;
-    username: string;
-    avatar: string;
-  };
+  _id?: string;
+
   text: string;
 }
 export interface Tweets {

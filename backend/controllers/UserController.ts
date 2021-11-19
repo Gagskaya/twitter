@@ -1,13 +1,12 @@
 import express from "express";
-import mongoose from "mongoose";
+
 import jwt from "jsonwebtoken";
 
 import { UserModel, UserModelDocumentI, UserModelI } from "../models/UserModel";
 import { generateMD5 } from "../utils/generateHash";
 import { sendEmail } from "../utils/sendEmail";
 import { validationResult } from "express-validator";
-
-const isValidObjectId = mongoose.Types.ObjectId.isValid;
+import { isValidObjectId } from "../utils/isValidObjectId";
 
 class UserController {
   async index(_: any, res: express.Response): Promise<void> {
@@ -23,6 +22,7 @@ class UserController {
   }
   async create(req: express.Request, res: express.Response): Promise<void> {
     try {
+      console.log(req.body);
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         res.status(450).json({ status: "error", errors: errors.array() });
@@ -79,7 +79,7 @@ class UserController {
         return;
       }
 
-      const user = await UserModel.findById(userId).exec();
+      const user = await UserModel.findById(userId).populate("tweets").exec();
       if (!user) {
         res.status(404).send();
         return;

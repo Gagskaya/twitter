@@ -1,7 +1,9 @@
 import { RootState } from "../../store";
-import { UserState } from "./contracts/state";
+import { User, UserState } from "./contracts/state";
 
 export const selectUser = (state: RootState): UserState => state.user;
+export const selectUserData = (state: RootState): User | undefined =>
+  state.user.data;
 export const selectIsAuth = (state: RootState): boolean =>
   !!selectUser(state).data;
 

@@ -47,6 +47,7 @@ const UserSchema = new Schema({
   },
   about: String,
   website: String,
+  tweets: [{ type: Schema.Types.ObjectId, ref: "Tweet" }],
 });
 UserSchema.set("toJSON", {
   transform: function (_, obj) {

@@ -6,6 +6,8 @@ import SmileIcon from "@material-ui/icons/SentimentSatisfiedOutlined";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { Avatar, Button, IconButton } from "@material-ui/core";
 import { useStyles } from "../pages/Home/theme";
+import { useDispatch } from "react-redux";
+import { fetchPostTweet } from "../store/ducks/tweets/actionCreators";
 
 interface AddTweetFormProps {
   classes: ReturnType<typeof useStyles>;
@@ -17,7 +19,10 @@ export const AddTweetForm: React.FC<AddTweetFormProps> = ({
   const MAX_LENGTH = 280;
   const textLimitPercent = (text.length / MAX_LENGTH) * 100;
   const textCount = MAX_LENGTH - text.length;
+  const dispatch = useDispatch();
+
   const onAddTweet = () => {
+    dispatch(fetchPostTweet({ text }));
     setText("");
   };
   const handleChangeTextArea = (e: React.FormEvent<HTMLTextAreaElement>) => {
@@ -40,6 +45,7 @@ export const AddTweetForm: React.FC<AddTweetFormProps> = ({
           onChange={handleChangeTextArea}
           value={text}
           rowsMax={15}
+          name="text"
         />
         <div className={classes.addTweetFormFooter}>
           <div className={classes.addTweetFormFooterWrap}>

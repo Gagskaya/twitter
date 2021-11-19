@@ -27,9 +27,12 @@ export function* fetchUserRegisterRequest({
 export function* fetchUserLoginRequest({ payload }: FetchUserLoginAction) {
   try {
     yield put(setUserLoginLoadingStatus(LoadingStatus.LOADING));
+    yield put(setUserRegisterLoadingStatus(LoadingStatus.NEVER));
     const { data } = yield call(userApi.fetchUserLogin, payload);
     window.localStorage.setItem("token", data.user.token);
+
     yield put(setUserLoginLoadingStatus(LoadingStatus.SUCCESS));
+
     yield put(setUser(data.user));
   } catch (error) {
     yield put(setUserLoginLoadingStatus(LoadingStatus.ERROR));
